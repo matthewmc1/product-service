@@ -68,6 +68,20 @@ func GetAllProductsHandler(w http.ResponseWriter, r *http.Request) {
 	l := log.New(os.Stdout, "product-handler", 3)
 	l.Printf("Requst on product handler at %v and trace ID %d", time.Now().UTC(), traceId)
 
+ 	resp, err := http.Get("http://ifconfig.me")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	l.Printf("IP address of the request %v and host %v", body, r.Host)
+	
 	pl := ProductList
 
 	if len(pl) < 1 {
