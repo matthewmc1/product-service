@@ -9,6 +9,7 @@ import (
 	"os"
 	"os/signal"
 	"time"
+	"io/ioutil"
 
 	mux "github.com/gorilla/mux"
 )
