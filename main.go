@@ -23,8 +23,8 @@ type Product struct {
 }
 
 type Health struct {
-	RESPONSE int `json: "response"`
-	STATUS string `json: "status"`
+	RESPONSE  int       `json: "response"`
+	STATUS    string    `json: "status"`
 }
 
 func main() {
@@ -125,7 +125,7 @@ var ProductList = []*Product{
 	},
 }
 
-var HealthCheck = *Health{
+var HealthCheck = []*Health{
 	{
 		RESPONSE: 200,
 		STATUS: "UP",
