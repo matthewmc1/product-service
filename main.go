@@ -41,6 +41,7 @@ func main() {
 	router := mux.NewRouter()
 	router.HandleFunc("/", EmptyResponseHandler).Methods(http.MethodGet)
 	router.HandleFunc("/products", GetAllProductsHandler).Methods(http.MethodGet)
+	router.HandleFunc("/health", HealthCheckHandler).Method(http.MethodGet)
 
 	srv := &http.Server{
 		Handler:      router,
@@ -107,6 +108,7 @@ func EmptyResponseHandler(w http.ResponseWriter, r *http.Request) {
 
 func HealthCheckHandler(w http.ResponseWriter, r *http.Request) {
 	l := log.New(os.Stdout, "healtch-check-handler", 3)
+	l.Printf("Request for health of the system %v", time.Now().UTC())
 	
 	v := HealthCheck
 	
@@ -125,9 +127,9 @@ var ProductList = []*Product{
 	},
 }
 
-var HealthCheck = []*Health{
+var HealthCheck = *Health{
 	{
 		RESPONSE: 200,
 		STATUS: "UP",
-	},
+	}
 }
