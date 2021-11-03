@@ -130,6 +130,6 @@ var ProductList = []*Product{
 var HealthCheck = *Health{
 	{
 		RESPONSE: 200,
-		STATUS: "UP",
+		STATUS: "UP"
 	}
 }
