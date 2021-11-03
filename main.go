@@ -41,7 +41,7 @@ func main() {
 	router := mux.NewRouter()
 	router.HandleFunc("/", EmptyResponseHandler).Methods(http.MethodGet)
 	router.HandleFunc("/products", GetAllProductsHandler).Methods(http.MethodGet)
-	router.HandleFunc("/health", HealthCheckHandler).Method(http.MethodGet)
+	router.HandleFunc("/healthz", HealthCheckHandler).Method(http.MethodGet)
 
 	srv := &http.Server{
 		Handler:      router,
