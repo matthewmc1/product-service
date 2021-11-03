@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"io/ioutil"
 	"time"
 
 	mux "github.com/gorilla/mux"
@@ -19,6 +20,11 @@ type Product struct {
 	CATEGORIES []string `json : "categories"`
 	PRICE      float64  `json: "price"`
 	QUANTITY   int      `json: "quantity"`
+}
+
+type Health struct {
+	RESPONSE int `json: "response"`
+	STATUS string `json: "status"`
 }
 
 func main() {
@@ -68,7 +74,7 @@ func GetAllProductsHandler(w http.ResponseWriter, r *http.Request) {
 	l := log.New(os.Stdout, "product-handler", 3)
 	l.Printf("Requst on product handler at %v and trace ID %d", time.Now().UTC(), traceId)
 
- 	/*resp, err := http.Get("http://ifconfig.me")
+ 	resp, err := http.Get("http://ifconfig.me")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -81,7 +87,7 @@ func GetAllProductsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	l.Printf("IP address of the request %v and host %v", body, r.Host)
-	*/
+
 	pl := ProductList
 
 	if len(pl) < 1 {
@@ -99,6 +105,14 @@ func EmptyResponseHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNoContent)
 }
 
+func HealthCheckHandler(w http.ResponseWriter, r *http.Request) {
+	l := log.New(os.Stdout, "healtch-check-handler", 3)
+	
+	v := HealthCheck
+	
+	json.NewEncoder(w).Encode(v)
+}
+
 var ProductList = []*Product{
 	{
 		ID:    1,
@@ -109,4 +123,11 @@ var ProductList = []*Product{
 		PRICE:    79.99,
 		QUANTITY: 10,
 	},
+}
+
+var HealthCheck = *Health{
+	{
+		RESPONSE: 200,
+		STATUS: "UP"
+	}
 }
