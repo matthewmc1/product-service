@@ -87,7 +87,7 @@ func GetAllProductsHandler(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	l.Printf("IP address of the request %v and host %v", body, r.Host)
+	l.Printf("IP address of the request %v and host %v", string(body), r.Host)
 
 	pl := ProductList
 
